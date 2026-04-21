@@ -1,0 +1,25 @@
+spring.application.name=expenses-api
+server.port=8080
+
+# PostgreSQL datasource
+spring.datasource.url=jdbc:postgresql://localhost:5432/expenses_db
+spring.datasource.username=YOUR_DB_USERNAME
+spring.datasource.password=YOUR_DB_PASSWORD
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# JPA / Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+server.error.include-message=always
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+# Jackson: return null as null (not omit)
+spring.jackson.default-property-inclusion=always
+
+# CORS（カンマ区切りで複数指定可能）
+cors.allowed-origin=http://localhost:5173
+
+# JWT
+jwt.secret=YOUR_JWT_SECRET_KEY_CHANGE_THIS
+jwt.expiration-ms=604800000

@@ -1,0 +1,11 @@
+target/
+*.class
+*.jar
+*.war
+
+# 機密情報を含む設定ファイル（ローカルで手動作成すること）
+src/main/resources/application.properties
+
+.idea/
+*.iml
+.DS_Store
