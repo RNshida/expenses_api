@@ -5,8 +5,10 @@ import com.expenses.api.dto.CategoryReorderRequest;
 import com.expenses.api.dto.CategoryRequest;
 import com.expenses.api.entity.AppUser;
 import com.expenses.api.entity.Category;
+import com.expenses.api.entity.CategoryType;
 import com.expenses.api.repository.CategoryGoalRepository;
 import com.expenses.api.repository.CategoryRepository;
+import com.expenses.api.repository.CategoryTypeRepository;
 import com.expenses.api.repository.MonthlyBalanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ import java.util.List;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final CategoryTypeRepository categoryTypeRepository;
     private final MonthlyBalanceRepository monthlyBalanceRepository;
     private final CategoryGoalRepository categoryGoalRepository;
 
@@ -41,6 +44,7 @@ public class CategoryService {
         int nextOrder = categoryRepository.findByUserOrderByDisplayOrderAscNameAsc(user).size();
         Category category = new Category(user, request.getName(), nextOrder);
         category.setColor(request.getColor());
+        category.setCategoryType(resolveType(user, request.getCategoryTypeId()));
         return CategoryDto.from(categoryRepository.save(category));
     }
 
@@ -54,6 +58,7 @@ public class CategoryService {
         }
         category.setName(request.getName());
         category.setColor(request.getColor());
+        category.setCategoryType(resolveType(user, request.getCategoryTypeId()));
         return CategoryDto.from(categoryRepository.save(category));
     }
 
@@ -72,9 +77,14 @@ public class CategoryService {
     public void delete(AppUser user, Long id) {
         Category category = categoryRepository.findByIdAndUser(id, user)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "カテゴリが見つかりません"));
-        // 関連する残高・目標データを先に削除（FK制約回避）
         monthlyBalanceRepository.deleteByCategoryId(id);
         categoryGoalRepository.deleteByUserAndCategoryId(user, id);
         categoryRepository.delete(category);
+    }
+
+    private CategoryType resolveType(AppUser user, Long typeId) {
+        if (typeId == null) return null;
+        return categoryTypeRepository.findByIdAndUser(typeId, user)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "指定された種別が見つかりません"));
     }
 }

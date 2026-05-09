@@ -9,13 +9,13 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(
-    name = "categories",
+    name = "category_types",
     uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "name"})
 )
 @Getter
 @Setter
 @NoArgsConstructor
-public class Category {
+public class CategoryType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,15 +28,8 @@ public class Category {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "display_order")
+    @Column(name = "display_order", nullable = false)
     private Integer displayOrder;
-
-    @Column(name = "color", length = 7)
-    private String color;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_type_id")
-    private CategoryType categoryType;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -46,7 +39,7 @@ public class Category {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Category(AppUser user, String name, Integer displayOrder) {
+    public CategoryType(AppUser user, String name, Integer displayOrder) {
         this.user = user;
         this.name = name;
         this.displayOrder = displayOrder;

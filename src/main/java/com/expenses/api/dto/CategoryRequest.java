@@ -18,4 +18,6 @@ public class CategoryRequest {
 
     @Pattern(regexp = "^#[0-9a-fA-F]{6}$", message = "カラーコードは#RRGGBBの形式で入力してください")
     private String color;
+
+    private Long categoryTypeId;
 }
