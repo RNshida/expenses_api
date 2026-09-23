@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -38,6 +39,12 @@ public class FurusatoContribution {
     @Column(name = "status", nullable = false, length = 30)
     private String status;
 
+    @Column(name = "donation_date")
+    private LocalDate donationDate;
+
+    @Column(name = "application_date")
+    private LocalDate applicationDate;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
@@ -47,12 +54,15 @@ public class FurusatoContribution {
     }
 
     public FurusatoContribution(AppUser user, Integer fiscalYear, String municipality,
-                                 String productName, BigDecimal amount, String status) {
+                                 String productName, BigDecimal amount, String status,
+                                 LocalDate donationDate, LocalDate applicationDate) {
         this.user = user;
         this.fiscalYear = fiscalYear;
         this.municipality = municipality;
         this.productName = productName;
         this.amount = amount;
         this.status = status;
+        this.donationDate = donationDate;
+        this.applicationDate = applicationDate;
     }
 }

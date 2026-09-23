@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
@@ -16,6 +17,8 @@ public class FurusatoContributionDto {
     private String productName;
     private BigDecimal amount;
     private String status;
+    private LocalDate donationDate;
+    private LocalDate applicationDate;
 
     public static FurusatoContributionDto from(FurusatoContribution c) {
         return new FurusatoContributionDto(
@@ -24,7 +27,9 @@ public class FurusatoContributionDto {
                 c.getMunicipality(),
                 c.getProductName(),
                 c.getAmount(),
-                c.getStatus()
+                c.getStatus(),
+                c.getDonationDate(),
+                c.getApplicationDate()
         );
     }
 }

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
@@ -26,4 +27,8 @@ public class FurusatoEntrySaveRequest {
     @NotBlank
     @Pattern(regexp = "未申請|ワンストップ申請済み|確定申告予定|確定申告済み")
     private String status;
+
+    private LocalDate donationDate;
+
+    private LocalDate applicationDate;
 }

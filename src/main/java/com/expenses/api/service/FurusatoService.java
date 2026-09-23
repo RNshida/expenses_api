@@ -40,7 +40,9 @@ public class FurusatoService {
                 req.getMunicipality().trim(),
                 req.getProductName() != null ? req.getProductName().trim() : null,
                 req.getAmount(),
-                req.getStatus()
+                req.getStatus(),
+                req.getDonationDate(),
+                req.getApplicationDate()
         );
         return FurusatoContributionDto.from(contributionRepository.save(c));
     }
@@ -53,6 +55,8 @@ public class FurusatoService {
         c.setProductName(req.getProductName() != null ? req.getProductName().trim() : null);
         c.setAmount(req.getAmount());
         c.setStatus(req.getStatus());
+        c.setDonationDate(req.getDonationDate());
+        c.setApplicationDate(req.getApplicationDate());
         return FurusatoContributionDto.from(contributionRepository.save(c));
     }
 
